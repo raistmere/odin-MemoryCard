@@ -1,34 +1,34 @@
 import { describe, expect, test, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import MockCardDisplay from "../Components/CardDisplay.jsx";
+import styles from "../Styles/CardDisplay.module.css";
 
-global.fetch = vi.fn(() => Promise.resolve({
-        json: () => Promise.resolve({name:"Mock Ditto"}),
+const mockFetch = global.fetch = vi.fn(() => Promise.resolve({
+        json: () => Promise.resolve({
+            name:"Mock Ditto",
+            sprites: {
+                front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+            }
+        }),
     })
 );
 
-describe("CardDisplay Component", () => {
+// 
+
+
+describe("CardDisplay Component", async () => {
     // 
-    render(<MockCardDisplay />);
+    await waitFor(() => render(<MockCardDisplay />));
     const cardDisplay = screen.getByTestId("cardDisplay");
     // 
-
-    // 
-    test("Check if component renders card display", () => {
+    test("Check if component renders [cardDisplay]", () => {
         expect(cardDisplay.classList.contains("cardDisplay")).toBe(true);
     });
-
     // 
-    // test("Check if we can render 1 pokemon card", () => {
-    //     // 
-    //     console.log("Child Name: ", cardDisplay.firstChild.textContent);
-    //     expect(cardDisplay.childElementCount).toBe(1);
-    // });
-
-    test("Check if we can render 15 pokemon cards", () => {
-        // 
-        expect(cardDisplay.childElementCount).toBe(15);
+    test("Check if we have the same # of [cards] as mockFetch calls", () => {
+        expect(cardDisplay.childElementCount).toBe(mockFetch.mock.calls.length);
     });
+    //
 });
 
 

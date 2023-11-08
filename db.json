@@ -1,31 +1,19 @@
 {
-    "posts": [
+    "pokemon": [
       {
         "id": 1,
-        "title": "Post 1"
+        "name": "jsonDitto",
+        "sprites": {
+          "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+        }
       },
       {
         "id": 2,
-        "title": "Post 2"
+        "name": "jsonPikachu"
       },
       {
         "id": 3,
-        "title": "Post 3"
+        "name": "jsonCharmander"
       }
-    ],
-    "comments": [
-      {
-        "id": 1,
-        "body": "some comment",
-        "postId": 1
-      },
-      {
-        "id": 2,
-        "body": "some comment",
-        "postId": 1
-      }
-    ],
-    "profile": {
-      "name": "typicode"
-    }
+    ]
   }

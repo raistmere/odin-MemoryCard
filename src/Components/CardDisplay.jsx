@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import styles from "../Styles/CardDisplay.css";
+import styles from "../Styles/CardDisplay.module.css";
 
 export default function CardDisplay(){
     const [cardList, setCardList] = useState([]);
+    const [isReady, setIsReady] = useState(false);
 
     // 
     const POKEMON_NAMES = [
@@ -15,17 +16,19 @@ export default function CardDisplay(){
     const fetchCards = async () => {
         let newCardList = [];
 
-        await POKEMON_NAMES.forEach(async (element) => {
-            let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/ditto`, { method: "GET" });
+        await POKEMON_NAMES.forEach(async (name) => {
+            // let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+            let fetched = await fetch("http://localhost:3000/pokemon/1");
             // 
             let jsonData = await fetched.json();
             // 
             newCardList.push(jsonData);
         });
-        // 
-
-        // setCardList([{name: jsonData.name}]);
-        setCardList(newCardList);
+        
+        if(!isReady){
+            setCardList(newCardList);
+            setIsReady(true);
+        }
     }
     // 
     useEffect(() => {
@@ -37,73 +40,16 @@ export default function CardDisplay(){
     // 
     cardList.forEach(element => {
         pokemonCards.push(
-            <div className="card">{element.name}</div>
+            <button className={styles.card}>
+                <p className={styles.cardName}>{element.name}</p>
+                <img src={element.sprites.front_default} alt="Pokemon Image" className={styles.cardImage} />
+            </button>
         )
     });
 
-    console.log("Pokemon: ", pokemonCards);
-    console.log("Cardlist: ", cardList);
-
     return (
-        <div className="cardDisplay" data-testid ="cardDisplay">
+        <div className={styles.cardDisplay} data-testid ="cardDisplay">
             {pokemonCards}
         </div>
     )
 };
-
-    // 
-    // const [cardList, setCardList] = useState([]);
-
-
-
-    // // 
-    // const updateCardList = async () => {
-    //     // 
-    //     const newCardList = await fetchCardList();
-    //     console.log("New Card List: ", newCardList);
-    //     // 
-    //     setCardList(newCardList);
-    // }
-
-    // // 
-    // const fetchCardList = () => {
-    //     // 
-    //     let arr = [];
-    //     // 
-    //     return new Promise((resolve) => 
-    //     {
-    //         // 
-    //         POKEMON_NAMES.forEach(async (name, index, array) => {
-    //             // 
-    //             let cardData = await fetchCardData(name);
-    //             // 
-    //             arr.push({name:cardData.name, img:cardData.sprites.front_default});
-    //             // arr.push({name:cardData.name, img:cardData.sprites.front_default});
-    //             // 
-    //             if(index === array.length - 1) resolve(arr);
-    //         })
-    //     });
-    // }
-
-    // // 
-    // const fetchCardData = async (name) => {
-    //     // 
-    //     let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, { method: "GET" });
-    //     // 
-    //     return await fetched.json(); 
-    // }
-
-    // useEffect(() => {
-    //     console.log("Display Images");
-    //     updateCardList();
-    // }, []);
-
-    // let imageCards = [];
-    // cardList.forEach((card) => {
-    //     imageCards.push( 
-    //         <div className={styles.CardDisplay}>
-    //             <img src={card.img} alt="" />
-    //             <p>{card.name}</p>
-    //         </div>
-    //     );
-    // })
