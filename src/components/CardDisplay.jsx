@@ -23,17 +23,19 @@ function CardDisplay(){
         let newCardList = [];
 
         await POKEMON_NAMES.forEach(async (name) => {
-            let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-            // let fetched = await fetch("http://localhost:3000/pokemon/1");
+            // let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+            let fetched = await fetch("http://localhost:3000/pokemon/1");
             // 
             let jsonData = await fetched.json();
             // 
             newCardList.push(jsonData);
         });
-        
+        // 
         if(!isReady){
-            setCardList(newCardList);
-            setIsReady(true);
+            await setTimeout(() => {
+                setCardList(newCardList);
+                setIsReady(true);
+            }, 1000);
         }
     }
     //
@@ -79,7 +81,7 @@ function CardDisplay(){
         // 
         cardList.forEach(element => {
             pokemonCards.push(
-                <button className={styles.card} onClick={(e) => { cardClicked(e.currentTarget) }}>
+                <button key={uuidv4()} className={styles.card} onClick={(e) => { cardClicked(e.currentTarget) }}>
                     <p className={styles.cardName}>{element.name}</p>
                     <img src={element.sprites.front_default} alt="Pokemon Image" className={styles.cardImage} />
                 </button>
@@ -91,22 +93,31 @@ function CardDisplay(){
                 {pokemonCards}
             </div> 
         );
-        console.log(cardDisplay);
     }
     
-    // 
     useEffect(() => {
-        fetchCards();
+        if(!isReady)
+        {
+            fetchCards();
+        }
     },[]);
 
+    if(cardList.length >= 1)
+    {
+        createDisplay();
+        return (
+            <>
+                {cardDisplay}
+            </>
+        )
+    }
+    else
+    {
+        return (
+            <div className={styles.loadingDisplay}>Loading Game</div>
+        )
+    }
 
-    // Go ahead and create the card display and render it to the screen.
-    createDisplay();
-    return (
-        <>
-            {cardDisplay}
-        </>
-    )
 };
 
 export default CardDisplay;

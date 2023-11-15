@@ -23,6 +23,10 @@ describe("CardDisplay Component", () => {
         // We want to make sure to clear mockFetch before each test to prevent mock calls issues.
         mockFetch.mockClear();
         render(<MockCardDisplay />);
+        // There needs to be a delay because of the state change in cardDisplay.
+        await new Promise((resolve) => setTimeout(() => {
+            resolve();
+        }, 100));
         await waitFor(() => { cardDisplay = screen.getByTestId("cardDisplay")});
     });
     // 
