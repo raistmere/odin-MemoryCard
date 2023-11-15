@@ -23,8 +23,8 @@ function CardDisplay(){
         let newCardList = [];
 
         await POKEMON_NAMES.forEach(async (name) => {
-            // let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-            let fetched = await fetch("http://localhost:3000/pokemon/1");
+            let fetched = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+            // let fetched = await fetch("http://localhost:3000/pokemon/1");
             // 
             let jsonData = await fetched.json();
             // 
