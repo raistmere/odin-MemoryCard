@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import pubsub from "../pubsub/pubsub";
+import styles from "../styles/Counter.module.css";
 
 function Counter(){
     const [count, setCount] = useState(0);
@@ -26,7 +27,10 @@ function Counter(){
     }
 
     return(
-        <div className="counterBox" data-testid="counterBox">{count}</div>
+        <div className={styles.counterBox}>
+            <h2>MEMORY SCORE:</h2>
+            <h2 className="counter" data-testid="counter">{count}</h2>
+        </div>
     );
 };
 

@@ -1,0 +1,18 @@
+h2 {
+    font-size: clamp(30px, 2vw, 35px);
+    font-weight: normal;
+}
+
+.counterBox {
+    /*  */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*  */
+    width: auto;
+    background-color: #9a8c98;
+    /*  */
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+}

@@ -10,7 +10,7 @@ describe("Counter Compontent", () => {
     // 
     beforeEach(() => {
         render(<MockCounter />);
-        counter = screen.getByTestId("counterBox");
+        counter = screen.getByTestId("counter");
     });
     // 
     test("Check if counter is rendered", () => {

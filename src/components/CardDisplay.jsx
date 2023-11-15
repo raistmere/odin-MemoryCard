@@ -63,25 +63,24 @@ function CardDisplay(){
         {
             // 
             pubsub.publish("resetCounter");
-            // We want to create a new cardList by copying the current cardList.
-            // Then use that new cardList and we call setCardList to rerender everything.
-            // This will reset everything back to normal with the default display.
+            // We want to go through each child of the cardDisplay and reset the classlist
+            // for each child to make sure the "clicked" class is removed.
             for (let i = 0; i < length; i++) {
                 let child = parent.children.item(i);
                 child.classList.remove("clicked");
             }
         }
     };
-    // 
+    // This method handles creating the full display with all the cards and
+    // returns the html element cardDisplay.
     const createDisplay = () => {
         // 
         const pokemonCards = [];
         // 
         cardList.forEach(element => {
-            let ranName = uuidv4();
             pokemonCards.push(
                 <button className={styles.card} onClick={(e) => { cardClicked(e.currentTarget) }}>
-                    <p className={styles.cardName}>{ranName}</p>
+                    <p className={styles.cardName}>{element.name}</p>
                     <img src={element.sprites.front_default} alt="Pokemon Image" className={styles.cardImage} />
                 </button>
             )
